@@ -185,7 +185,6 @@ rectified
 recurrent
 reduce
 regression
-regular
 regularization
 reinforcement
 relu

@@ -4,29 +4,19 @@ from dataclasses import dataclass
 import os
 
 # code taken from
-
 _DATA_DIR = os.path.join(os.path.abspath(""), "../../data")
-_RESULT_DIR = os.path.join(os.path.abspath(""), "../../data/res")
-
+_TRAIT_PATH = os.path.join(_DATA_DIR + "/16x16.tpl.9")
+_CLUES_PATH = os.path.join(_DATA_DIR + "/ml_words_with_clues.txt")
 _WEB_PAGE_DIR = os.path.join(os.path.abspath(""), "..")
+_RESULT_DIR = os.path.join(os.path.abspath(""), "../../data/res")
 
 _TIMEOUT_SEC = 20
 
-@dataclass
-class Placement:
-    i: int
-    j: int
-    word: str
-    is_horizontal: bool
-    position: int = 0
 
-
-def read_field(path):
+def find_placements(path):
     with open(path, 'r') as f:
-        return [line.strip("\n") for line in f.readlines()]
+        field = [line.strip("\n") for line in f.readlines()]
 
-
-def find_placements(field):
     placements = list()
     for i in range(len(field)):
         buf = ""
@@ -39,16 +29,16 @@ def find_placements(field):
                 buf += letter
             else:
                 if len(buf) > 1:
-                    placements.append(Placement(i=i, j=jStart, word=buf, is_horizontal=True))
+                    placements.append({"answer": buf, "orientation": "across", "startx": jStart + 1, "starty": i + 1})
                 buf = ""
 
         if len(buf) > 1:
-            placements.append(Placement(i=i, j=jStart, word=buf, is_horizontal=True))
+            placements.append({"answer": buf, "orientation": "across", "startx": jStart + 1, "starty": i + 1})
 
     for j in range(len(field[0])):
         buf = ""
         iStart = 0
-        for i in range(len(field[0])):
+        for i in range(len(field)):
             letter = field[i][j]
             if 'a' <= letter <= 'z':
                 if len(buf) == 0:
@@ -56,38 +46,35 @@ def find_placements(field):
                 buf += letter
             else:
                 if len(buf) > 1:
-                    placements.append(Placement(i=iStart, j=j, word=buf, is_horizontal=False))
+                    placements.append({"answer": buf, "orientation": "down", "startx": j + 1, "starty": iStart + 1})
                 buf = ""
+
+        if len(buf) > 1:
+            placements.append({"answer": buf, "orientation": "down", "startx": j + 1, "starty": iStart + 1})
+
     return placements
 
-def read_clues():
+
+def read_clues(path):
     clues = dict()
-    # with open(_DATA_DIR + "ml_words_with_clues.txt") as f:
-    #     f.readlines()
-    #
-    #
+    with open(path) as f:
+        lines = f.readlines()
+
+    for line in lines:
+        tokens = line.strip().split(" ")
+        clues[tokens[0]] = " ".join(tokens[1:])
+
     return clues
 
 
-def format_placement(p):
-    return {
-        "clue": "First letter of greek alphabet",
-        "answer": p.word,
-        "position": p.position,
-        "orientation": "across" if p.is_horizontal else "down",
-        "startx": p.i ,
-        "starty": p.j
-    }
-
-
-def make_web_page(placements, clues):
+def make_html_page(placements):
     if os.path.exists(_RESULT_DIR):
         shutil.rmtree(_RESULT_DIR)
     os.makedirs(_RESULT_DIR + "/js")
     shutil.copy(_WEB_PAGE_DIR + "/index.html", _RESULT_DIR)
     shutil.copy(_WEB_PAGE_DIR + "/js/jquery.crossword.js", _RESULT_DIR + "/js")
 
-    formated_json = json.dumps([format_placement(p) for p in placements])
+    formated_json = json.dumps(placements)
     with open(_RESULT_DIR + "/js/script.js", 'w') as f:
         f.write(f""" 
 (function($) {{
@@ -99,27 +86,32 @@ def make_web_page(placements, clues):
 }})(jQuery)
         """)
 
-def make_crossword():
-    last_solution = list(sorted(filter(lambda x: ".tpl." in x, os.listdir(_DATA_DIR))))[-1]
-    solution_path = os.path.join(_DATA_DIR, last_solution)
-    print(solution_path)
-    field = read_field(solution_path)
-    placements = find_placements(field)
-    across = 1
-    down = 1
-    for p in placements:
-        if p.is_horizontal:
-            p.position = across
-            across += 1
-        else:
-            p.position = down
-            across += 1
 
+def make_crossword():
+    placements = find_placements(_TRAIT_PATH)
+    clues = read_clues(_CLUES_PATH)
+
+    placements = sorted(placements, key=lambda p: p["starty"] + p["startx"])
+    start_to_pos = dict()
+    curr_pos = 1
+    for p in placements:
+        idx = p["startx"] * 1024 + p["starty"]
+        if idx in start_to_pos:
+            p["position"] = start_to_pos[idx]
+        else:
+            p["position"] = curr_pos
+            start_to_pos[idx] = curr_pos
+            curr_pos += 1
+
+        if p["answer"] not in clues:
+            print(f"ERROR: {p['answer']} not in clues")
+        p["clue"] = clues[p["answer"]]
+
+    placements = sorted(placements, key=lambda p: p["position"])
     for i, p in enumerate(placements):
         print(f"{i}: {p}")
 
-    clues = read_clues()
-    make_web_page(placements, clues)
+    make_html_page(placements)
 
 
 
