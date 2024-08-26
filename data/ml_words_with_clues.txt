@@ -1,3 +1,242 @@
-acceleration Increase in model performance metrics as training data scales.
-activation Process that determines whether a neuron fires in a neural network.
-adaboost Boosting method that enhances weak learners in ensemble models.
+acceleration Boost in training speed achieved by hardware like GPUs or TPUs.
+activation Function applied to neurons in a neural network to introduce non-linearity.
+adaboost Algorithm known for combining weak classifiers to form a strong one.
+adam Optimizer named after the first man in biblical history.
+adversarial Type of attack where input data is subtly altered to deceive a model
+agent Autonomous entity in a reinforcement learning environment.
+align Bring into proper position for model optimization
+annotation Labeling process crucial for training supervised learning models.
+anomaly Unexpected data point that deviates from the norm
+approximation Estimation technique used in machine learning to generalize models for prediction.
+attention A neural mechanism that helps models focus on specific parts of input sequences.
+augmentation Technique of expanding training data by applying transformations.
+autograd Feature in PyTorch enabling automatic differentiation.
+backpropagation A fundamental neural network algorithm for fine-tuning weights by minimizing error.
+backward Direction of error propagation in neural network training.
+bagging Ensemble method involving random sampling with replacement.
+bandit Adaptive learning strategy in reinforcement learning optimizing action selection while exploring options.
+baseline Starting point for model performance before any optimization.
+batch Group of data samples processed together in training a neural network.
+batchnorm A technique used in deep learning to stabilize and accelerate neural network training by normalizing layer inputs.
+bayes Father of a theorem crucial to probabilistic modeling and inference
+bayesian Related to a probabilistic approach that updates beliefs in light of new evidence.
+benchmark Reference point for measuring model performance.
+bengio Canada's neural network pioneer and deep learning stalwart.
+bias Tendency of a model to make consistent errors on certain data.
+boltzmann Statistical distribution in ML algorithms inspired by a physicist's thermodynamics work.
+boosting Ensemble method that sequentially adjusts weak models to improve performance.
+both Common operation to compare elements in two sets.
+categorical Type of data that represents distinct groups or categories without any intrinsic ordering.
+chain Sequential model structure linking multiple layers.
+chance A foundational concept in probabilistic models and statistics, often representing the likelihood of an event occurring.
+classification Sorting data points into predefined categories or labels.
+classifier AI model that assigns input data to specific categories or labels.
+clustering Group similar data points together without supervision.
+cnn Deep learning architecture commonly used for image recognition.
+coefficient A multiplier that quantifies the relationship between variables in linear regression.
+compute Perform calculations using data in a systematic manner.
+connection Link between nodes in a neural network.
+constraint Limitation or restriction impacting solution space in optimization problems.
+converge Optimization goal during training when loss function decreases.
+convolution A key operation in neural networks, especially effective for image processing.
+core The central part of a neural network where the main computations take place.
+corpus A collection of text or data used for training linguistic models.
+cost The metric optimized in training to minimize error.
+covariate Influential variable impacting predictions in a model
+cpu Core component central to processing tasks in most computers.
+criterion Standard used for evaluating machine learning models
+crowdsource Obtain annotations or data by gathering contributions from a large group of people.
+cuda Parallel computing platform and programming model by NVIDIA.
+decoder Neural network component responsible for generating output sequences in machine translation.
+denoising Process of removing unwanted noise from data to enhance its quality and clarity in machine learning applications.
+derivative What calculus concept is fundamental for understanding gradients in optimization algorithms?
+derive Obtain a function's gradient using calculus.
+descent Gradient-based optimization algorithm involves this downward step.
+differentiation Calculus process essential for optimizing neural networks.
+dimension Essential aspect in feature space impacting the complexity and performance of models.
+directional Relating to the use of vectors or gradients in machine learning optimization techniques.
+discriminator Neural network component distinguishing between real and generated data.
+distance A key metric in clustering algorithms that measures how alike or unlike data points are.
+dot Relationship calculation between vectors in machine learning.
+downstream Data or tasks that follow after initial preprocessing and model training.
+dropout A regularization technique to prevent overfitting by randomly ignoring certain neurons during training
+elu Activation function known for addressing the vanishing gradient problem
+embedding A technique to represent words or items in dense vector space in NLP and ML.
+encoder Component converting data into a different format, often used in neural networks' architectures
+ensembling Combining multiple models to improve overall performance.
+epsilon Small term often added to avoid division by zero or achieve numerical stability in algorithms.
+estimation Process of predicting model parameters from data
+euclidean Type of distance measure often used in k-means clustering.
+evaluation Assessing model performance to determine its effectiveness.
+extrapolation Predicting beyond the known data range
+factor A contributing element to model performance
+factorization Breaking down a matrix into simpler, constituent entities in machine learning.
+family Group of related machine learning models sharing common attributes
+feedforward A type of neural network where connections don’t loop back.
+fit Adjust a model's parameters to minimize error
+flatten Transform a multi-dimensional array into a single dimension.
+fpr AI metric measuring the rate of false alarms in classification.
+function Mathematical relation essential for mapping inputs to outputs in algorithms.
+gan A neural network architecture involving a generator and a discriminator.
+gate A logic unit used in neural networks and digital circuits.
+generalization How well a model performs on unseen data.
+generate Create data or outputs often through models.
+generation Process of creating new data, models, or solutions in machine learning and artificial intelligence.
+generic Common model type that lacks specificity.
+gesture A motion used in human-computer interaction recognized by machine learning algorithms.
+gini An impurity measure used in decision tree algorithms for splitting datasets.
+google Pioneering tech giant known for its powerful search engine and AI advancements.
+gpu Essential hardware for accelerating deep learning computations.
+gradient AI-Training slope used in optimization.
+graph A structure of nodes and edges used extensively in network theory and machine learning models
+greedy A type of algorithm that makes locally optimal choices at each step, hoping to find a global optimum.
+hierarchical A type of clustering that builds a nested tree of data groupings.
+hinge Loss function often used in SVMs.
+hinton Father of deep learning and Turing Award recipient
+huber Robust loss function combining squared and absolute error.
+human One whose intelligence AI seeks to emulate
+hyperparameter Adjustable variable in a model that guides the training process but is not learned from the data.
+hyperplane Divide and conquer in the world of SVMs.
+image Data type often processed by convolutional neural networks.
+imagenet A benchmark dataset pivotal in the development of deep learning for image recognition.
+jupyter Interactive notebook tool for data science and machine learning experiments.
+kafka Distributed stream-processing platform named after a famous writer.
+kaggle Platform where data scientists compete and collaborate on predictive modeling tasks.
+kalman Filter type used for estimating unknown variables in a linear system.
+karpathy AI influencer known for his work at OpenAI and Tesla; authored 'Neural Networks and Deep Learning' blog.
+keras Deep learning library that offers a user-friendly interface for building neural networks.
+kernel Central function in SVM that helps to project data into higher dimensions
+labeling The process of identifying and annotating data for training supervised learning models.
+lambda Function often used in Python to create quick, anonymous operations.
+lasso Regression technique that 'shrinks' coefficients to prevent overfitting.
+latent Hidden feature space in unsupervised learning.
+layernorm Normalization technique applied within neural network layers to stabilize and accelerate training.
+leaf Decision tree end point where classification happens.
+leaky Type of ReLU that combats the 'dying' issue by allowing a small gradient when inactive.
+learn Acquire knowledge or skills through study, experience, or teaching in machine learning.
+learning Process through which machines improve their performance by example or experience.
+lecun Pioneering AI researcher who introduced convolutional neural networks.
+levenshtein A metric used to measure the difference between two strings based on their edit distance.
+license Official permission for using software, often essential for deploying AI models in production.
+likelihood The function used to estimate parameters in probabilistic models by observing data.
+linear Type of regression often contrasted with logistic.
+linguistics Study of language, crucial for natural language processing.
+loss Measure of prediction error in model training.
+lstm RNN variant known for its ability to remember long-term dependencies.
+lua Scripting language often used for game development and integrated in machine learning frameworks like Torch.
+mae A metric used to measure the average magnitude of errors in predictions.
+magnitude The scale or size of a vector in a machine learning model.
+manifold Data structure used in topological space, crucial for techniques like dimensionality reduction.
+markov Stochastic process where the future state depends only on the current state, not the sequence of events that preceded it.
+matlab Popular numerical computing environment often used for ML prototyping.
+maximize Optimize a function to reach its highest value
+median Central value in a sorted list of numbers
+memoization Optimization technique that saves computation by storing and reusing previously calculated results.
+metric Standard for evaluating model performance
+minibatch A small subset of data used in each iteration of training a machine learning model.
+minimization Objective often pursued in training machine learning models, particularly in reducing loss.
+misclassified Label that didn't match the data.
+mlp Neural network architecture with multiple layers for processing complex data.
+mnist Classic dataset of handwritten digits used for training image processing systems.
+model Representation of a learned pattern from training data in machine learning.
+momentum Optimization technique that helps accelerate gradient descent by using past gradients to smooth out updates.
+mse Objective function minimizing squared errors.
+multiclass Type of classification used when predicting more than two distinct categories.
+multicollinearity Statistical phenomenon where predictor variables in a model are highly correlated.
+naive Basic method in Bayes classifier.
+negative Type of data label often used in binary classification to indicate absence or false condition.
+ner Subtask of information extraction in unstructured text.
+nerf Tweak to lessen a model’s overpowered performance.
+network Neural _______ - it connects nodes and layers in deep learning.
+neural Type of network mimicking brain connections for deep learning.
+neuron Building block of artificial neural networks, inspired by the human brain.
+ngrams Sequential subpatterns of words used in text analysis.
+nlp Field dedicated to enabling machines to understand and generate human language.
+nominal Common term for identifying a category without implying any quantitative value.
+nonlinear Describes a type of relationship where the output does not change in direct proportion to the input
+norm Common term for measuring vector magnitude in machine learning and mathematics.
+normalization Scaling technique to adjust data values to a common range in machine learning.
+notebook Where data scientists jot code and insights interactively
+numpy Python library essential for numerical computations
+observation Unit of data instance analyzed in a dataset
+openai Creator of ChatGPT and GPT-3, a leader in the AI research community.
+optimization The process of adjusting a model to improve performance and reduce error
+optimizer Tool in machine learning that adjusts weights to minimize error.
+overfitting When a model learns the noise of the training data too well, leading to poor generalization on new data.
+overflow When too much data spills beyond capacity in a buffer.
+pandas Python library for data manipulation and analysis.
+paper Work published in a conference or journal by researchers.
+pca A dimensionality reduction technique that identifies principal components
+perceptron Basic unit of a neural network, inspired by a biological neuron.
+pipeline Series of data processing steps in machine learning, often assembled in a sequenced workflow
+planning Essential step in AI for decision-making and navigating future actions.
+pooling A layer in convolutional neural networks that reduces spatial dimensions.
+predict To forecast outcomes based on data patterns.
+prediction Outcome estimation based on data patterns.
+predictor Tool that estimates future outcomes based on patterns in data.
+prior Bayesian prerequisite before incorporating new data
+propagate Ensure neural network weights are updated during training process.
+propagation The process by which errors or information spread through a neural network.
+python Popular programming language used extensively in AI/ML projects.
+quantile Statistical measure dividing data into equal-sized intervals
+recall Ability of a model to identify all relevant instances in the dataset.
+reconstruction Process of rebuilding original data from latent space in autoencoders.
+rectified AI-friendly activation function, synonym for 'corrected'.
+recurrent Type of neural network suited for sequence prediction.
+reduce Lower the dimensional space in data preprocessing technique.
+regression A machine learning technique used to predict continuous outcomes.
+regularization Technique to prevent overfitting by adding a penalty to the model complexity.
+reinforcement The process in machine learning where agents learn to optimize actions through rewards and punishments.
+relu Activation function that outputs the input if positive, otherwise zero.
+render Generate a visual output from a model in computer graphics.
+rendering Turning data into visuals or images in machine learning.
+representation Essential aspect of feature engineering in converting raw data into a usable format for models.
+reward Positive signal received by an agent in reinforcement learning.
+ridge Type of regression used to prevent overfitting by adding a penalty to the size of coefficients.
+rms Common metric used to measure the magnitude of error in regression models (abbr.).
+rnn A neural network type ideal for learning sequences and handling time-series data.
+roc A graphical plot used to measure the performance of a binary classifier.
+sampler Tool used to select a representative subset from a dataset.
+scalar A single-dimensional quantity often used in calculations.
+scatter Type of plot used to visualize data points in two-dimensional space.
+scipy Python library for advanced scientific and technical computing.
+segmentation Dividing images into meaningful regions in computer vision.
+sgd Optimization algorithm commonly used for training deep neural networks.
+sigmoid Activation function that maps inputs to a range between 0 and 1.
+similarity The measure of how alike two data points are within a dataset.
+singular Matrix descriptor indicating a unique solution in the context of linear algebra.
+smooth What a kernel function aims to make out of high-dimensional data.
+smoothing Techniques in NLP to adjust frequency counts and handle unseen words.
+softmax Activation function that converts logits into a probability distribution.
+solve Find the solution to a problem, often using algorithms or computation.
+sparse Characteristic of data matrices with many zeros, often requiring special methods for efficient processing.
+speech Natural language converted to audible output in AI systems
+stable Desired state of a model's training process, where loss and accuracy have smoothened out.
+step A gradient descent iteration in learning algorithms.
+stochastic Typically used to describe processes or algorithms involving randomness.
+stride Parameter in deep learning that defines the step size of the filter as it moves across the input.
+subsequent Following in the training sequence of an RNN's time steps?
+summarization Condensing long texts into concise key points in NLP tasks.
+supervised Type of learning where a model is trained with labeled data.
+svm Algorithm that finds the hyperplane for optimal data separation.
+tanh Activation function that maps inputs to a range between -1 and 1
+target Desired outcome variable in supervised learning.
+tensor Mathematical object central to deep learning operations, extending scalars, vectors, and matrices.
+tensorflow Google’s open-source machine learning library named after a mathematical concept involving networks
+tokenization Process of breaking text into individual units for NLP.
+tokenizer Tool that converts text into individual elements for processing in NLP.
+torch Popular deep learning library known for its dynamic computation graph.
+tpr This measures the proportion of actual positives correctly identified in a classification task.
+tradeoff Balancing act between model complexity and performance in machine learning.
+training Process of teaching a model using data to optimize its performance on a given task.
+translation Turning text from one language to another using neural models.
+tree Common structure for decision-making models, has roots and leaves in data.
+underfitting Produces high bias and poor performance on training data.
+unsupervised Learning method without labeled data.
+vae Type of neural network that learns to encode data into a probabilistic latent space for generating new samples.
+validation Dataset division process to evaluate model performance?
+vanilla Basic, no-frills version of a machine learning model.
+vanishing A gradient descent issue causing values to diminish and networks to fail.
+variance Statistical measure indicating the spread of data points from the mean.
+vector Mathematical entity essential in machine learning, often representing features or directions.
+weight It's adjusted during training to minimize the loss function.

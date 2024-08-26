@@ -5,7 +5,7 @@ import os
 
 # code taken from
 _DATA_DIR = os.path.join(os.path.abspath(""), "../../data")
-_TRAIT_PATH = os.path.join(_DATA_DIR + "/16x16.tpl.9")
+_TRAIT_PATH = os.path.join(_DATA_DIR + "/24x24.tpl.final")
 _CLUES_PATH = os.path.join(_DATA_DIR + "/ml_words_with_clues.txt")
 _WEB_PAGE_DIR = os.path.join(os.path.abspath(""), "..")
 _RESULT_DIR = os.path.join(os.path.abspath(""), "../../data/res")
@@ -112,7 +112,6 @@ def make_crossword():
         print(f"{i}: {p}")
 
     make_html_page(placements)
-
 
 
 if __name__ == "__main__":

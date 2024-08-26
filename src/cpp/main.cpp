@@ -92,11 +92,10 @@ void writeField(const std::string& path, const Field& f) {
     }
 }
 
-
-std::optional<Slot> randomSlot(Field& f, bool isHorizontal, bool isFirstPlacement) {
+std::optional<Slot> randomSlot(const Field& f, bool isHorizontal, bool isFirstPlacement, int maxWordLen) {
     Slot slot;
     slot.isHorizontal = isHorizontal;
-    slot.len = rand() % (f.size() - MIN_WORD_LEN) + MIN_WORD_LEN;
+    slot.len = rand() % (maxWordLen - MIN_WORD_LEN) + MIN_WORD_LEN;
     slot.iPos = rand() % f.size();
     slot.jPos = rand() % (f.size() - slot.len + 1);
     if (!slot.isHorizontal)
@@ -169,14 +168,14 @@ int findOneCrossword(const KDDict& kdtree, Field& f) {
     bool isHorizontal = true;
     for(;;) {
         bool hadSuccessfulPlacement = false;
-        for(int times = 8192; times != 0; times--) {
-            auto slot = randomSlot(f, isHorizontal, usedWords.empty());
+        for(int times = 4096; times != 0; times--) {
+            auto slot = randomSlot(f, isHorizontal, usedWords.empty(), kdtree.maxWordLen());
             if (!slot)
                 continue;
             auto matchedWords = kdtree.lookup(slot->pattern);
             if (!matchedWords.empty()) {
                 const auto& word = matchedWords[rand() % matchedWords.size()];
-                if (usedWords.contains(word)) {
+                if (usedWords.count(word) != 0) {
                     continue;
                 }
 
@@ -205,7 +204,7 @@ int main(int argc, char* argv[]) {
     const auto fieldPath = argv[1];
     const auto wordsPath = argv[2];
 
-    srand(42);
+    srand(time(nullptr));
 
     Field plainField = readField(fieldPath);
     KDDict dict(wordsPath);

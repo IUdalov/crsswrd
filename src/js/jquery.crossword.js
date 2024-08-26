@@ -9,7 +9,7 @@
 				Qurossword Puzzle: a javascript + jQuery crossword puzzle
 				"light" refers to a white box - or an input
 
-				DEV NOTES: 
+				DEV NOTES:
 				- activePosition and activeClueIndex are the primary vars that set the ui whenever there's an interaction
 				- 'Entry' is a puzzler term used to describe the group of letter inputs representing a word solution
 				- This puzzle isn't designed to securely hide answerers. A user can see answerers in the js source
@@ -19,14 +19,14 @@
 				- Entry orientation must be provided in lieu of provided ending x,y coordinates (script could be adjust to use ending x,y coords)
 				- Answers are best provided in lower-case, and can NOT have spaces - will add support for that later
 			*/
-			
+
 			var puzz = {}; // put data array in object literal to namespace it into safety
 			puzz.data = entryData;
-			
+
 			// append clues markup after puzzle wrapper div
 			// This should be moved into a configuration object
 			this.after('<div id="puzzle-clues"><h2>Across</h2><ul id="across" style="list-style: none;"></ul><h2>Down</h2><ul id="down"></ul></div>');
-			
+
 			// initialize some variables
 			var tbl = ['<table id="puzzle">'],
 			    puzzEl = this,
@@ -34,7 +34,7 @@
 				clueLiEls,
 				coords,
 				entryCount = puzz.data.length,
-				entries = [], 
+				entries = [],
 				rows = [],
 				cols = [],
 				solved = [],
@@ -49,10 +49,10 @@
 				z = 0;
 
 			var puzInit = {
-				
+
 				init: function() {
 					currOri = 'across'; // app's init orientation could move to config object
-					
+
 					// Reorder the problems array ascending by POSITION
 					puzz.data.sort(function(a,b) {
 						return a.position - b.position;
@@ -61,8 +61,8 @@
 					// Set keyup handlers for the 'entry' inputs that will be added presently
 					puzzEl.delegate('input', 'keyup', function(e){
 						mode = 'interacting';
-						
-						
+
+
 						// need to figure out orientation up front, before we attempt to highlight an entry
 						switch(e.which) {
 							case 39:
@@ -76,7 +76,7 @@
 							default:
 								break;
 						}
-						
+
 						if ( e.keyCode === 9) {
 							return false;
 						} else if (
@@ -85,101 +85,108 @@
 							e.keyCode === 39 ||
 							e.keyCode === 40 ||
 							e.keyCode === 8 ||
-							e.keyCode === 46 ) {			
-												
+							e.keyCode === 46 ) {
 
-							
+
+
 							if (e.keyCode === 8 || e.keyCode === 46) {
-								currOri === 'across' ? nav.nextPrevNav(e, 37) : nav.nextPrevNav(e, 38); 
+								currOri === 'across' ? nav.nextPrevNav(e, 37) : nav.nextPrevNav(e, 38);
 							} else {
 								nav.nextPrevNav(e);
 							}
-							
+
 							e.preventDefault();
 							return false;
 						} else {
-							
+
 							console.log('input keyup: '+solvedToggle);
-							
+
 							puzInit.checkAnswer(e);
 
 						}
 
 						e.preventDefault();
-						return false;					
+						return false;
 					});
-			
+
 					// tab navigation handler setup
 					puzzEl.delegate('input', 'keydown', function(e) {
 
 						if ( e.keyCode === 9) {
-							
+
 							mode = "setting ui";
 							if (solvedToggle) solvedToggle = false;
 
 							//puzInit.checkAnswer(e)
 							nav.updateByEntry(e);
-							
+
 						} else {
 							return true;
 						}
-												
+
 						e.preventDefault();
-									
+
 					});
-					
+
 					// tab navigation handler setup
 					puzzEl.delegate('input', 'click', function(e) {
 						mode = "setting ui";
 						if (solvedToggle) solvedToggle = false;
 
 						console.log('input click: '+solvedToggle);
-					
+
 						nav.updateByEntry(e);
 						e.preventDefault();
-									
+
 					});
-					
-					
+
+
 					// click/tab clues 'navigation' handler setup
 					clues.delegate('li', 'click', function(e) {
 						mode = 'setting ui';
-						
+
 						if (!e.keyCode) {
 							nav.updateByNav(e);
-						} 
-						e.preventDefault(); 
+						}
+						e.preventDefault();
 					});
-					
-					
+
+
 					// highlight the letter in selected 'light' - better ux than making user highlight letter with second action
 					puzzEl.delegate('#puzzle', 'click', function(e) {
 						$(e.target).focus();
 						$(e.target).select();
 					});
-					
+
 					// DELETE FOR BG
 					puzInit.calcCoords();
-					
+
 					// Puzzle clues added to DOM in calcCoords(), so now immediately put mouse focus on first clue
 					clueLiEls = $('#puzzle-clues li');
 					$('#' + currOri + ' li' ).eq(0).addClass('clues-active').focus();
-				
+
 					// DELETE FOR BG
 					puzInit.buildTable();
 					puzInit.buildEntries();
-										
+
 				},
-				
+
 				/*
 					- Given beginning coordinates, calculate all coordinates for entries, puts them into entries array
 					- Builds clue markup and puts screen focus on the first one
 				*/
 				calcCoords: function() {
 					/*
+					Backup start coords
+					*/
+					for (var i = 0, p = entryCount; i < p; ++i) {
+						puzz.data[i]['startx_orig'] = puzz.data[i].startx;
+						puzz.data[i]['starty_orig'] = puzz.data[i].starty;
+					}
+					/*
 						Calculate all puzzle entry coordinates, put into entries array
 					*/
-					for (var i = 0, p = entryCount; i < p; ++i) {		
+					for (var i = 0, p = entryCount; i < p; ++i) {
 						// set up array of coordinates for each problem
 						entries.push(i);
 						entries[i] = [];
@@ -187,13 +194,13 @@
 						for (var x=0, j = puzz.data[i].answer.length; x < j; ++x) {
 							entries[i].push(x);
 							coords = puzz.data[i].orientation === 'across' ? "" + puzz.data[i].startx++ + "," + puzz.data[i].starty + "" : "" + puzz.data[i].startx + "," + puzz.data[i].starty++ + "" ;
-							entries[i][x] = coords; 
+							entries[i][x] = coords;
 						}
 
 						// while we're in here, add clues to DOM!
 						$('#' + puzz.data[i].orientation).append('<li tabindex="1" data-position="' + i + '">' + puzz.data[i].position + '. ' + puzz.data[i].clue + '</li>');
-					}				
-					
+					}
+
 					// Calculate rows/cols by finding max coords of each entry, then picking the highest
 					for (var i = 0, p = entryCount; i < p; ++i) {
 						for (var x=0; x < entries[i].length; x++) {
@@ -204,9 +211,9 @@
 
 					rows = Math.max.apply(Math, rows) + "";
 					cols = Math.max.apply(Math, cols) + "";
-		
+
 				},
-				
+
 				/*
 					Build the table markup
 					- adds [data-coords] to each <td> cell
@@ -215,7 +222,7 @@
 					for (var i=1; i <= rows; ++i) {
 						tbl.push("<tr>");
 							for (var x=1; x <= cols; ++x) {
-								tbl.push('<td data-coords="' + x + ',' + i + '"></td>');		
+								tbl.push('<td data-coords="' + x + ',' + i + '"></td>');
 							};
 						tbl.push("</tr>");
 					};
@@ -223,11 +230,11 @@
 					tbl.push("</table>");
 					puzzEl.append(tbl.join(''));
 				},
-				
+
 				/*
 					Builds entries into table
 					- Adds entry class(es) to <td> cells
-					- Adds tabindexes to <inputs> 
+					- Adds tabindexes to <inputs>
 				*/
 				buildEntries: function() {
 					var puzzCells = $('#puzzle td'),
@@ -235,14 +242,14 @@
 						$groupedLights,
 						hasOffset = false,
 						positionOffset = entryCount - puzz.data[puzz.data.length-1].position; // diff. between total ENTRIES and highest POSITIONS
-						
+
 					for (var x=1, p = entryCount; x <= p; ++x) {
 						var letters = puzz.data[x-1].answer.split('');
 
 						for (var i=0; i < entries[x-1].length; ++i) {
 							light = $(puzzCells +'[data-coords="' + entries[x-1][i] + '"]');
-							
-							// check if POSITION property of the entry on current go-round is same as previous. 
+
+							// check if POSITION property of the entry on current go-round is same as previous.
 							// If so, it means there's an across & down entry for the position.
 							// Therefore you need to subtract the offset when applying the entry class.
 							if(x > 1 ){
@@ -250,45 +257,42 @@
 									hasOffset = true;
 								};
 							}
-							
+
 							if($(light).empty()){
 								$(light)
 									.addClass('entry-' + (hasOffset ? x - positionOffset : x) + ' position-' + (x-1) )
 									.append('<input maxlength="1" val="" type="text" tabindex="-1" />');
 							}
 						};
-						
-					};	
-					
-					// Put entry number in first 'light' of each entry, skipping it if already present
-					for (var i=0, p = entryCount; i < p; ++i) {
-						$groupedLights = $('.position-' + i);
-						// console.log('#' + puzz.data[i].position + puzz.data[i].clue)
-						if (!$('.entry-' + i + ':eq(0) span').length) {
-							$groupedLights.eq(0)
-								.append('<span>' + puzz.data[i].position + '</span>');
-						}
+
+					};
+
+					// Put entry number in first 'light' of each entry
+					// TODO: skip it if already present
+					for (var i=0; i < entryCount; ++i) {
+						$light = $(puzzCells +'[data-coords="' +  puzz.data[i].startx_orig + ',' + puzz.data[i].starty_orig + '"]');
+						$light.append('<span>' + puzz.data[i].position + '</span>')
 					}
 
-					
+
 					util.highlightEntry();
 					util.highlightClue();
 					$('.active').eq(0).focus();
 					$('.active').eq(0).select();
-										
+
 				},
-				
-				
+
+
 				/*
 					- Checks current entry input group value against answer
 					- If not complete, auto-selects next input for user
 				*/
 				checkAnswer: function(e) {
-					
+
 					var valToCheck, currVal;
-					
+
 					util.getActivePositionFromClassGroup($(e.target));
-				
+
 					valToCheck = puzz.data[activePosition].answer.toLowerCase();
 
 					currVal = $('.position-' + activePosition + ' input')
@@ -299,34 +303,34 @@
 						})
 						.get()
 						.join('');
-					
+
 					//console.log(currVal + " " + valToCheck);
-					if(valToCheck === currVal){	
+					if(valToCheck === currVal){
 						$('.active')
 							.addClass('done')
 							.removeClass('active');
-					
+
 						$('.clues-active').addClass('clue-done');
 
 						solved.push(valToCheck);
 						solvedToggle = true;
 						return;
 					}
-					
+
 					currOri === 'across' ? nav.nextPrevNav(e, 39) : nav.nextPrevNav(e, 40);
-					
+
 					//z++;
 					//console.log(z);
 					//console.log('checkAnswer() solvedToggle: '+solvedToggle);
 
-				}				
+				}
 
 
 			}; // end puzInit object
-			
+
 
 			var nav = {
-				
+
 				nextPrevNav: function(e, override) {
 
 					var len = $actives.length,
@@ -335,17 +339,17 @@
 						p = el.parent(),
 						ps = el.parents(),
 						selector;
-				
+
 					util.getActivePositionFromClassGroup(el);
 					util.highlightEntry();
 					util.highlightClue();
-					
+
 					$('.current').removeClass('current');
-					
+
 					selector = '.position-' + activePosition + ' input';
-					
+
 					//console.log('nextPrevNav activePosition & struck: '+ activePosition + ' '+struck);
-						
+
 					// move input focus/select to 'next' input
 					switch(struck) {
 						case 39:
@@ -356,7 +360,7 @@
 								.select();
 
 							break;
-						
+
 						case 37:
 							p
 								.prev()
@@ -387,12 +391,12 @@
 						default:
 						break;
 					}
-															
+
 				},
-	
+
 				updateByNav: function(e) {
 					var target;
-					
+
 					$('.clues-active').removeClass('clues-active');
 					$('.active').removeClass('active');
 					$('.current').removeClass('current');
@@ -400,63 +404,63 @@
 
 					target = e.target;
 					activePosition = $(e.target).data('position');
-					
+
 					util.highlightEntry();
 					util.highlightClue();
-										
+
 					$('.active').eq(0).focus();
 					$('.active').eq(0).select();
 					$('.active').eq(0).addClass('current');
-					
+
 					// store orientation for 'smart' auto-selecting next input
 					currOri = $('.clues-active').parent('ol').prop('id');
-										
+
 					activeClueIndex = $(clueLiEls).index(e.target);
 					//console.log('updateByNav() activeClueIndex: '+activeClueIndex);
-					
+
 				},
-			
+
 				// Sets activePosition var and adds active class to current entry
 				updateByEntry: function(e, next) {
 					var classes, next, clue, e1Ori, e2Ori, e1Cell, e2Cell;
-					
+
 					if(e.keyCode === 9 || next){
-						// handle tabbing through problems, which keys off clues and requires different handling		
+						// handle tabbing through problems, which keys off clues and requires different handling
 						activeClueIndex = activeClueIndex === clueLiEls.length-1 ? 0 : ++activeClueIndex;
-					
+
 						$('.clues-active').removeClass('.clues-active');
-												
+
 						next = $(clueLiEls[activeClueIndex]);
 						currOri = next.parent().prop('id');
 						activePosition = $(next).data('position');
-												
+
 						// skips over already-solved problems
 						util.getSkips(activeClueIndex);
 						activePosition = $(clueLiEls[activeClueIndex]).data('position');
-						
-																								
+
+
 					} else {
 						activeClueIndex = activeClueIndex === clueLiEls.length-1 ? 0 : ++activeClueIndex;
-					
+
 						util.getActivePositionFromClassGroup(e.target);
-						
+
 						clue = $(clueLiEls + '[data-position=' + activePosition + ']');
 						activeClueIndex = $(clueLiEls).index(clue);
-						
+
 						currOri = clue.parent().prop('id');
-						
+
 					}
-						
+
 						util.highlightEntry();
 						util.highlightClue();
-						
-						//$actives.eq(0).addClass('current');	
-						//console.log('nav.updateByEntry() reports activePosition as: '+activePosition);	
+
+						//$actives.eq(0).addClass('current');
+						//console.log('nav.updateByEntry() reports activePosition as: '+activePosition);
 				}
-				
+
 			}; // end nav object
 
-			
+
 			var util = {
 				highlightEntry: function() {
 					// this routine needs to be smarter because it doesn't need to fire every time, only
@@ -467,24 +471,24 @@
 					$actives.eq(0).focus();
 					$actives.eq(0).select();
 				},
-				
+
 				highlightClue: function() {
-					var clue;				
+					var clue;
 					$('.clues-active').removeClass('clues-active');
 					$(clueLiEls + '[data-position=' + activePosition + ']').addClass('clues-active');
-					
+
 					if (mode === 'interacting') {
 						clue = $(clueLiEls + '[data-position=' + activePosition + ']');
 						activeClueIndex = $(clueLiEls).index(clue);
 					};
 				},
-				
+
 				getClasses: function(light, type) {
 					if (!light.length) return false;
-					
+
 					var classes = $(light).prop('class').split(' '),
 					classLen = classes.length,
-					positions = []; 
+					positions = [];
 
 					// pluck out just the position classes
 					for(var i=0; i < classLen; ++i){
@@ -492,7 +496,7 @@
 							positions.push(classes[i]);
 						}
 					}
-					
+
 					return positions;
 				},
 
@@ -515,18 +519,18 @@
 							}
 
 							if(e1Ori === currOri){
-								activePosition = classes[0].split('-')[1];		
+								activePosition = classes[0].split('-')[1];
 							} else if(e2Ori === currOri){
 								activePosition = classes[1].split('-')[1];
 							}
 						} else {
-							activePosition = classes[0].split('-')[1];						
+							activePosition = classes[0].split('-')[1];
 						}
-						
+
 						console.log('getActivePositionFromClassGroup activePosition: '+activePosition);
-						
+
 				},
-				
+
 				checkSolved: function(valToCheck) {
 					for (var i=0, s=solved.length; i < s; i++) {
 						if(valToCheck === solved[i]){
@@ -535,22 +539,22 @@
 
 					}
 				},
-				
+
 				getSkips: function(position) {
 					if ($(clueLiEls[position]).hasClass('clue-done')){
 						activeClueIndex = position === clueLiEls.length-1 ? 0 : ++activeClueIndex;
-						util.getSkips(activeClueIndex);						
+						util.getSkips(activeClueIndex);
 					} else {
 						return false;
 					}
 				}
-				
+
 			}; // end util object
 
-				
+
 			puzInit.init();
-	
-							
+
+
 	}
-	
+
 })(jQuery);

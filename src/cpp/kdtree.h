@@ -21,7 +21,7 @@ void assertAllValuesSame(const T1& v1, const T2& v2) {
     for(const auto& i1: v1)
         s1.insert(i1);
     for(const auto& i2: v2)
-        assert(s1.contains(i2));
+        assert(s1.count(i2) != 0);
 }
 
 bool matchPattern(const std::string& pattern, const std::string& str) {
@@ -133,15 +133,14 @@ private:
 
 class KDDict {
 public:
-    explicit KDDict(const std::string& path, size_t maxLen = 20) {
+    explicit KDDict(const std::string& path) {
         std::map<size_t, std::vector<std::string>> groupedByLen;
         for(const auto& s: readLines(path)) {
             groupedByLen[s.size()].push_back(s);
         }
-
+        maxWordLen_ = groupedByLen.rbegin()->first;
         for(const auto& kv: groupedByLen)
-            if (kv.first <= maxLen)
-                trees_.emplace(kv.first, kv.second);
+            trees_.emplace(kv.first, kv.second);
     }
 
     std::vector<std::string> lookup(const std::string& pattern) const {
@@ -169,9 +168,14 @@ public:
         return sum;
     }
 
+    size_t maxWordLen() const {
+        return maxWordLen_;
+    }
+
 
 private:
     std::map<size_t, KDTree> trees_;
+    size_t maxWordLen_ = 0;
 
     std::vector<std::string> readLines(const std::string& path) {
         std::ifstream in(path);
