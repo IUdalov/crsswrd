@@ -4,7 +4,7 @@ This repo has code to generate crossword puzzle about machine learning.
 [**TAKE ME TO THE ML CROSSWORD PUZZLE 🧩**](https://udalovilia.com/crossword/)
 
 ## How does it work?
-1. [Explanation in Engish]()
+1. [Explanation in Engish](https://medium.com/@iliaudalov/making-a-crossword-puzzle-about-ml-using-monte-carlo-and-chatgpt-a6a4db49f29d)
 2. [Статья на русском](https://habr.com/ru/articles/838674/)
 
 ## Reproducing the result
