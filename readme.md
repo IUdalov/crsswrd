@@ -5,7 +5,7 @@ This repo has code to generate crossword puzzle about machine learning.
 
 ## How does it work?
 1. [Explanation in Engish]()
-2. [Статья на русском]()
+2. [Статья на русском](https://habr.com/ru/articles/838674/)
 
 ## Reproducing the result
 ### Install Requirements
